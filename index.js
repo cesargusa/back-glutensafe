@@ -22,7 +22,7 @@ app.use(express.json());
 // Configura las rutas
 // app.use('/users/users', userRegisterRoutes);
 // app.use('/users/usersLogin', userLoginRoutes);
-app.use('/bonds', companyRoutes);
+app.use('/companies', companyRoutes);
 
 // Configura el puerto (si estás en local puedes usar un puerto como 3000)
 const PORT = process.env.PORT || 3000;  // Usa el puerto definido en .env o 3000 por defecto
