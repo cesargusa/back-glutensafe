@@ -31,4 +31,27 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+router.get('/cities', async (req, res) => {
+  try {
+    // Consulta a Supabase
+    const { data, error } = await supabase
+      .from('dbo.Company')
+      .select('city') // Seleccionamos únicamente la columna 'city'
+      .neq('city', null); // Excluimos los valores nulos en 'city'
+
+    if (error) {
+      console.error("Error en la consulta a Supabase:", error);
+      return res.status(400).json({ error: error.message });
+    }
+
+    // Filtrar ciudades únicas y convertirlas a mayúsculas
+    const uniqueCities = [...new Set(data.map(item => item.city?.toUpperCase().trim()))].filter(Boolean);
+
+    return res.status(200).json(uniqueCities);
+  } catch (err) {
+    console.error("Error inesperado:", err);
+    return res.status(500).json({ error: "Error al procesar la solicitud" });
+  }
+});
 export default router;
